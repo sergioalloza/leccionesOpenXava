@@ -34,4 +34,8 @@ public class Producto {
 	
 	@TextArea
 	String observaciones;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@DescriptionsList
+	Autor autor;
 }

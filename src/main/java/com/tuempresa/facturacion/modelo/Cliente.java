@@ -6,8 +6,8 @@ import org.openxava.annotations.*;
 
 import lombok.*;
 
-@Entity
-@Getter @Setter
+@Entity @Getter @Setter
+@View(name = "Simple", members = "numero, nombre")
 public class Cliente {
 	
 	@Id
