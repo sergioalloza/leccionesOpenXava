@@ -68,5 +68,7 @@ abstract public class DocumentoComercial extends Identificable{
 	@Stereotype("DINERO")
 	@Calculation("sum(detalles.importe) + iva")
 	BigDecimal importeTotal;
+	
+	//Lección 14 Terminada mediante consultas SQL, no cambia el código
 
 }
