@@ -55,6 +55,7 @@ abstract public class DocumentoComercial extends Identificable{
 	@Stereotype("MEMO")
 	String observaciones;
 	
+	@DefaultValueCalculator(CalculadorPorcentajeIVA.class)
 	@Digits(integer = 2, fraction = 0)
 	BigDecimal porcentajeIVA;
 	
