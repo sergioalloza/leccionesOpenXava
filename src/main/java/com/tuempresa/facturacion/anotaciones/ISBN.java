@@ -9,6 +9,8 @@ import javax.validation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ISBN {
 	
+	boolean buscar() default true;
+	
 	Class<?>[]groups() default{};
 	Class<? extends Payload>[] payload() default{};
 	String message() default "isbn_invalido";
