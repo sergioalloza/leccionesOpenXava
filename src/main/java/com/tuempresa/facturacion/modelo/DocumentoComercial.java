@@ -24,7 +24,7 @@ import lombok.*;
 		"observaciones" +
 	"}"
 )
-abstract public class DocumentoComercial extends Identificable{
+abstract public class DocumentoComercial extends Eliminable{
 	
 	@DefaultValueCalculator(CurrentYearCalculator.class)
 	@Column(length = 4)

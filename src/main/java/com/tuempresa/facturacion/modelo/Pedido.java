@@ -22,6 +22,8 @@ import lombok.*;
 		+ "observaciones"
 )
 
+@Tab(baseCondition = "${eliminado} = false")
+@Tab(name="Eliminado", baseCondition = "${eliminado} = true") // Tab con nombre
 public class Pedido extends DocumentoComercial{
 	
 	@ManyToOne
@@ -78,6 +80,9 @@ public class Pedido extends DocumentoComercial{
 		
 	}
 	
-	
+	public void setEliminado(boolean eliminado) {
+        if (eliminado) validarPreBorrar(); // Llamamos a la validación explícitamente
+        super.setEliminado(eliminado);
+    }
 
 }
