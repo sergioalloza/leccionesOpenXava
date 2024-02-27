@@ -44,6 +44,16 @@
             <poner propiedad="restaurar" valor="true"/> <!-- Pone la propiedad restaurar a true -->
                 <!-- antes de llamar al método execute() de la acción -->
         </accion>
+
+    </controlador>
+
+    <controlador nombre="Pedido">
+	<hereda-de controlador="Facturacion"/> <!-- Para tener las acciones estándar -->
+
+	<accion nombre="crearFactura" modo="detail"
+	    clase="com.tuempresa.facturacion.acciones.CrearFacturaDesdePedido"/>
+	<!-- modo="detail" : Sólo en modo detalle -->
+
     </controlador>
  
 </controladores>

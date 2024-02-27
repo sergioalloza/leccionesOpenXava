@@ -1,12 +1,17 @@
 package com.tuempresa.facturacion.modelo;
 
 import java.time.*;
+import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import org.apache.commons.beanutils.*;
 import org.openxava.annotations.*;
+import org.openxava.jpa.*;
 import org.openxava.util.*;
+
+import com.tuempresa.facturacion.acciones.*;
 
 import lombok.*;
 
@@ -28,6 +33,7 @@ public class Pedido extends DocumentoComercial{
 	
 	@ManyToOne
 	@ReferenceView("SinClienteNiPedidos")
+	@OnChange(MostrarOcultarCrearFactura.class) // Añade esto
 	Factura factura;
 	
 	@Depends("fecha")
@@ -49,6 +55,7 @@ public class Pedido extends DocumentoComercial{
 	}
 	
 	@Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+	@OnChange(MostrarOcultarCrearFactura.class) // Añade esto
 	boolean entregado;
 	
 	@AssertTrue(message = "pedido_debe_estar_entregado")
@@ -84,5 +91,30 @@ public class Pedido extends DocumentoComercial{
         if (eliminado) validarPreBorrar(); // Llamamos a la validación explícitamente
         super.setEliminado(eliminado);
     }
+	
+	public void crearFactura()
+		    throws CrearFacturaException // Una excepción de aplicación (1)
+		{
+		    if (this.factura != null) { // Si ya tiene una factura no podemos crearla
+		        throw new CrearFacturaException( 
+		            "pedido_ya_tiene_factura"); // Admite un id de 18n como argumento
+		    }
+		    if (!isEntregado()) { // Si el pedido no está entregado no podemos crear la factura
+		        throw new CrearFacturaException("pedido_no_entregado");
+		    }
+		    try {
+		        Factura factura = new Factura(); 
+		        BeanUtils.copyProperties(factura, this); 
+		        factura.setOid(null); 
+		        factura.setFecha(LocalDate.now()); 
+		        factura.setDetalles(new ArrayList<>(getDetalles())); 
+		        XPersistence.getManager().persist(factura);
+		        this.factura = factura; 
+		    }
+		    catch (Exception ex) { // Cualquier excepción inesperada (2)
+		        throw new SystemException( // Se lanza una excepción runtime (3)
+		            "imposible_crear_factura", ex);
+		    }
+		}
 
 }

@@ -7,8 +7,9 @@ import javax.ejb.*;
 import org.openxava.actions.*;
  
 public class BuscarExcluyendoEliminados
-    extends SearchByViewKeyAction { // La acción estándar de OpenXava para buscar
- 
+    //extends SearchByViewKeyAction { // La acción estándar de OpenXava para buscar
+ 	extends SearchExecutingOnChangeAction {
+
     private boolean esEliminable() { // Pregunta si la entidad tiene una propiedad 'eliminado'
         return getView().getMetaModel()
             .containsMetaProperty("eliminado");
