@@ -82,6 +82,10 @@ abstract public class DocumentoComercial extends Eliminable{
 				
 	}
 	
+	public String toString() {
+        return anyo + "/" + numero;
+    }
+	
 	@org.hibernate.annotations.Formula("IMPORTETOTAL * 0.10")
 	@Setter(AccessLevel.NONE)
 	@Stereotype("DINERO")
