@@ -28,11 +28,13 @@ abstract public class DocumentoComercial extends Eliminable{
 	
 	@DefaultValueCalculator(CurrentYearCalculator.class)
 	@Column(length = 4)
+	@SearchKey
 	int anyo;
 	
 	@Column(length = 6)
 	//@DefaultValueCalculator(value = CalculadorSiguienteNumeroParaAnyo.class, properties = @PropertyValue(name = "anyo"))
 	@ReadOnly
+	@SearchKey
 	int numero;
 	
 	@DefaultValueCalculator(CurrentLocalDateCalculator.class)
